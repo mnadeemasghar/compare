@@ -42,6 +42,7 @@ class Controller extends BaseController
         if($data_array != null){
             $data['product_title'] = $data_array['data']['root']['fields']['product']['title'];
             $data['product_link'] = $data_array['data']['root']['fields']['product']['link'];
+            $data['brand'] = $data_array['data']['root']['fields']['product']['brand']['name'];
             $data['product_rating'] = $data_array['data']['root']['fields']['product']['rating']['score']; 
             $data['product_total_rating'] = $data_array['data']['root']['fields']['product']['rating']['total']; 
             
