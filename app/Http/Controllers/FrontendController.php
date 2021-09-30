@@ -85,6 +85,26 @@ class FrontendController extends Controller
             $history = [];
         }
 
+        if(isset($history)){
+            $sale = 0;
+            $old_stock = 0;
+            $earning = 0;
+            foreach($history as $his){
+                $sale = $old_stock - $his->stock;
+                if( $sale < 0 ){
+                    $sale = 0;
+                    $earning = $earning + $sale * $his->price ;
+                }else{
+                    $earning = $earning + $sale * $his->price ;
+                }
+                $old_stock = $his->stock;
+            }
+            $history->sale = $sale;
+            $history->earning = $earning;
+        }
+
+        // dd($history);
+
         return view('frontend.getdarazdata')
                 ->with('history',$history)
                 ->with('data',$data)
