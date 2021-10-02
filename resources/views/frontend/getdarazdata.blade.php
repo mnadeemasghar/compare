@@ -215,8 +215,8 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                             </div>
                         </li>
                         <li style="display: flex;justify-content: space-between;"><b>Reviews:</b> {{ $data['response']['product_total_rating'] }}</li>
-                        <li style="display: flex;justify-content: space-between;"><b>Sales :</b>{{ $history->sale }}</li>
-                        <li style="display: flex;justify-content: space-between;"><b>Earning :</b>{{ $history->earning }}</li>
+                        <li style="display: flex;justify-content: space-between;"><b>Sales :</b>{{ $history['sale'] }}</li>
+                        <li style="display: flex;justify-content: space-between;"><b>Earning :</b>{{ $history['earning'] }}</li>
                     </ul>
                 </td>
                 <td>
@@ -247,7 +247,7 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($history as $history_data)
+                                            @foreach($history['data'] as $history_data)
                                             <tr>
                                                 <td> {{ $history_data->date }} </td>
                                                 <td> {{ $history_data->stock }} </td>
