@@ -209,7 +209,7 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                             </div>
                         </li>
                         <li style="display: flex;justify-content: space-between;"><b>Reviews:</b> {{ $data['response']['product_total_rating'] }}</li>
-                        <li style="display: flex;justify-content: space-between;"><b>Sales :</b>{{ $history['sale'] }}</li>
+                        <li style="display: flex;justify-content: space-between;"><b>Sales (sale by stock difference) :</b>{{ $history['sale'] }}</li>
                         <li style="display: flex;justify-content: space-between;"><b>Earning :</b>{{ $history['earning'] }}</li>
                     </ul>
                 </td>

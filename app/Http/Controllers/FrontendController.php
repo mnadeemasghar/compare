@@ -52,39 +52,45 @@ class FrontendController extends Controller
             if($host == "www.daraz.pk" || $host == "daraz.pk"){
                 $new = new DarazLink();
                 $response = $this->getdata($request->url);
-                
-                $new->url = $url;
-                if(isset($response['product_title'])){$new->product_title = $response['product_title'];}
-                if(isset($response['product_link'])){$new->product_link = $response['product_link'];}
-                if(isset($response['product_rating'])){$new->product_rating_score = $response['product_rating'];}
-                if(isset($response['product_total_rating'])){$new->product_rating_total = $response['product_total_rating'];}
-                if(isset($response['seller_name'])){$new->seller_name = $response['seller_name'];}
-                if(isset($response['seller_shop_id'])){$new->seller_shop_id = $response['seller_shop_id'];}
-                if(isset($response['product_sale_price'])){$new->product_sale_price = $response['product_sale_price'];}
-                if(isset($response['product_stock'])){$new->product_stock = $response['product_stock'];}
-            //    return $new;
-                if($new->save()){
-                    if(isset($response['product_title'])){
-                        $data['message'] = 'Data Fetched.';
 
-                        //save sku data in darazskus table
-                        foreach($response['product_skus'] as $key => $skus){
-                            $sku = new Darazskus();
-                            $sku->darazlink_id = $new->id;
-                            $sku->sku_id = $key;
-                            $sku->sku_stock = $skus['stock'];
-                            $sku->price = $skus['price']['salePrice']['value'];
+                if(isset($response['product_link'])){
+                    $product_link = $response['product_link'];
+                    $old_data = DarazLink::where('product_link',$product_link)->whereDate('created_at', Carbon::today())->get();
+                    if($old_data->count() < 1){
+                        $new->url = $url;
+                        if(isset($response['product_title'])){$new->product_title = $response['product_title'];}
+                        if(isset($response['product_link'])){$new->product_link = $response['product_link'];}
+                        if(isset($response['product_rating'])){$new->product_rating_score = $response['product_rating'];}
+                        if(isset($response['product_total_rating'])){$new->product_rating_total = $response['product_total_rating'];}
+                        if(isset($response['seller_name'])){$new->seller_name = $response['seller_name'];}
+                        if(isset($response['seller_shop_id'])){$new->seller_shop_id = $response['seller_shop_id'];}
+                        if(isset($response['product_sale_price'])){$new->product_sale_price = $response['product_sale_price'];}
+                        if(isset($response['product_stock'])){$new->product_stock = $response['product_stock'];}
+                    
+                        if($new->save()){
+                            if(isset($response['product_title'])){
+                                $data['message'] = 'Data Fetched.';
 
-                            $sku->save();
+                                //save sku data in darazskus table
+                                foreach($response['product_skus'] as $key => $skus){
+                                    $sku = new Darazskus();
+                                    $sku->darazlink_id = $new->id;
+                                    $sku->sku_id = $key;
+                                    $sku->sku_stock = $skus['stock'];
+                                    $sku->price = $skus['price']['salePrice']['value'];
+
+                                    $sku->save();
+
+                                }
+                            }
+                            else{
+                                $data['message'] = 'Something went Wrong';
+                            }
 
                         }
                     }
-                    else{
-                        $data['message'] = 'Something went Wrong';
-                    }
-
-                    $data['response'] = $response;
                 }
+                $data['response'] = $response;
             }
             else{
                 $data['message'] = 'This tool is only for Daraz.pk';
@@ -142,44 +148,49 @@ class FrontendController extends Controller
             $url = $request->url;
             $parse = parse_url($url);
             $host = $parse['host'];
-
             
             if($host == "www.daraz.pk" || $host == "daraz.pk"){
-                $new = new DarazLink();
                 $response = $this->getdata($request->url);
-                
-                $new->url = $url;
-                if(isset($response['product_title'])){$new->product_title = $response['product_title'];}
-                if(isset($response['product_link'])){$new->product_link = $response['product_link'];}
-                if(isset($response['product_rating'])){$new->product_rating_score = $response['product_rating'];}
-                if(isset($response['product_total_rating'])){$new->product_rating_total = $response['product_total_rating'];}
-                if(isset($response['seller_name'])){$new->seller_name = $response['seller_name'];}
-                if(isset($response['seller_shop_id'])){$new->seller_shop_id = $response['seller_shop_id'];}
-                if(isset($response['product_sale_price'])){$new->product_sale_price = $response['product_sale_price'];}
-                if(isset($response['product_stock'])){$new->product_stock = $response['product_stock'];}
-               
-                if($new->save()){
-                    if(isset($response['product_title'])){
-                        $data['message'] = 'Data Fetched.';
 
-                        //save sku data in darazskus table
-                        foreach($response['product_skus'] as $key => $skus){
-                            $sku = new Darazskus();
-                            $sku->darazlink_id = $new->id;
-                            $sku->sku_id = $key;
-                            $sku->sku_stock = $skus['stock'];
-                            $sku->price = $skus['price']['salePrice']['value'];
-
-                            $sku->save();
-
+                if(isset($response['product_link'])){
+                    $product_link = $response['product_link'];
+                    $old_data = DarazLink::where('product_link',$product_link)->whereDate('created_at', Carbon::today())->get();
+                    if($old_data->count() < 1){
+                        $new = new DarazLink();
+                        $new->url = $url;
+                        if(isset($response['product_title'])){$new->product_title = $response['product_title'];}
+                        if(isset($response['product_link'])){$new->product_link = $response['product_link'];}
+                        if(isset($response['product_rating'])){$new->product_rating_score = $response['product_rating'];}
+                        if(isset($response['product_total_rating'])){$new->product_rating_total = $response['product_total_rating'];}
+                        if(isset($response['seller_name'])){$new->seller_name = $response['seller_name'];}
+                        if(isset($response['seller_shop_id'])){$new->seller_shop_id = $response['seller_shop_id'];}
+                        if(isset($response['product_sale_price'])){$new->product_sale_price = $response['product_sale_price'];}
+                        if(isset($response['product_stock'])){$new->product_stock = $response['product_stock'];}
+                    
+                        if($new->save()){
+                            if(isset($response['product_title'])){
+                                
+                                //save sku data in darazskus table
+                                foreach($response['product_skus'] as $key => $skus){
+                                    $sku = new Darazskus();
+                                    $sku->darazlink_id = $new->id;
+                                    $sku->sku_id = $key;
+                                    $sku->sku_stock = $skus['stock'];
+                                    $sku->price = $skus['price']['salePrice']['value'];
+                                    
+                                    $sku->save();
+                                    
+                                }
+                            }
+                            else{
+                                $data['message'] = 'Something went Wrong';
+                            }
+                            
                         }
                     }
-                    else{
-                        $data['message'] = 'Something went Wrong';
-                    }
-
-                    $data['response'] = $response;
                 }
+                $data['message'] = 'Data Fetched.';
+                $data['response'] = $response;
             }
             else{
                 $data['message'] = 'This tool is only for Daraz.pk';
@@ -189,7 +200,7 @@ class FrontendController extends Controller
             $data['message'] = 'Waiting for your link';
         }
         if(isset($response['product_link'])){
-            $link = $new->product_link;
+            $link = $response['product_link'];
             $history['data'] = DB::table('darazlink')
                         ->where("product_link",$link)
                         ->select(
@@ -206,20 +217,21 @@ class FrontendController extends Controller
         }
 
         if(isset($history['data'])){
-            $sale = 0;
+            $actual_sale = 0;
             $old_stock = 0;
             $earning = 0;
+            $daily_sale = 0;
             foreach($history['data'] as $his){
-                $sale = $old_stock - $his->stock;
-                if( $sale < 0 ){
-                    $sale = 0;
-                    $earning = $earning + $sale * $his->price ;
-                }else{
-                    $earning = $earning + $sale * $his->price ;
+                $daily_sale = $old_stock - $his->stock;
+                
+                if( $daily_sale > 0 ){
+                    $actual_sale = $daily_sale + $actual_sale;
+                    $earning = $actual_sale * $his->price;
                 }
+
                 $old_stock = $his->stock;
             }
-            $history['sale'] = $sale;
+            $history['sale'] = $actual_sale;
             $history['earning'] = $earning;
         }else{
             $history['sale'] = 0;
