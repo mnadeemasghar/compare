@@ -143,16 +143,14 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
             </script>
         </div>
         <main class="tm-col-right">
-            <hr class="mb-4">
             <section class="tm-content tm-about">
                 <h2 class="tm-content-title">Get Price, Current Stock, Rating and much more by Daraz product URL</h2>
-                <hr class="mb-4">
                 <div class="media my-3">
                     <div class="media-body">
                         <form action="{{route('getdarazdata')}}" method="GET">
                             <input
                                 id="url"
-                                class="form-control" 
+                                class="form-control mb-3" 
                                 type="url"
                                 name="url"
                                 @if(isset($url))
@@ -163,20 +161,16 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                              >
                             <button class="btn btn-success" type="submit">Get Data</button>
                             <button class="btn btn-info" onclick="document.getElementById('url').value = '' ">Clear</button>
+                            <a href="{{route('contactus')}}" target="_blank"><button class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bug-fill" viewBox="0 0 16 16">
+                              <path d="M4.978.855a.5.5 0 1 0-.956.29l.41 1.352A4.985 4.985 0 0 0 3 6h10a4.985 4.985 0 0 0-1.432-3.503l.41-1.352a.5.5 0 1 0-.956-.29l-.291.956A4.978 4.978 0 0 0 8 1a4.979 4.979 0 0 0-2.731.811l-.29-.956z"/>
+                              <path d="M13 6v1H8.5v8.975A5 5 0 0 0 13 11h.5a.5.5 0 0 1 .5.5v.5a.5.5 0 1 0 1 0v-.5a1.5 1.5 0 0 0-1.5-1.5H13V9h1.5a.5.5 0 0 0 0-1H13V7h.5A1.5 1.5 0 0 0 15 5.5V5a.5.5 0 0 0-1 0v.5a.5.5 0 0 1-.5.5H13zm-5.5 9.975V7H3V6h-.5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 0-1 0v.5A1.5 1.5 0 0 0 2.5 7H3v1H1.5a.5.5 0 0 0 0 1H3v1h-.5A1.5 1.5 0 0 0 1 11.5v.5a.5.5 0 1 0 1 0v-.5a.5.5 0 0 1 .5-.5H3a5 5 0 0 0 4.5 4.975z"/>
+                            </svg>&nbsp; Report an Error</button></a>
                         </form>
                         <div class="alert-warning">
                             <b>This is Beta Version:</b> Some of the links may not work, so be patient and keep following us on <a href="https://www.facebook.com/comparepk/" target="_blank">facebook page</a>. We are actively Updating. Thanks
                         </div>
                         @if(isset($data))
-                            {{$data['message']}}
-                            <a href="{{route('contactus')}}" target="_blank"><button class="btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bug-fill" viewBox="0 0 16 16">
-                              <path d="M4.978.855a.5.5 0 1 0-.956.29l.41 1.352A4.985 4.985 0 0 0 3 6h10a4.985 4.985 0 0 0-1.432-3.503l.41-1.352a.5.5 0 1 0-.956-.29l-.291.956A4.978 4.978 0 0 0 8 1a4.979 4.979 0 0 0-2.731.811l-.29-.956z"/>
-                              <path d="M13 6v1H8.5v8.975A5 5 0 0 0 13 11h.5a.5.5 0 0 1 .5.5v.5a.5.5 0 1 0 1 0v-.5a1.5 1.5 0 0 0-1.5-1.5H13V9h1.5a.5.5 0 0 0 0-1H13V7h.5A1.5 1.5 0 0 0 15 5.5V5a.5.5 0 0 0-1 0v.5a.5.5 0 0 1-.5.5H13zm-5.5 9.975V7H3V6h-.5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 0-1 0v.5A1.5 1.5 0 0 0 2.5 7H3v1H1.5a.5.5 0 0 0 0 1H3v1h-.5A1.5 1.5 0 0 0 1 11.5v.5a.5.5 0 1 0 1 0v-.5a.5.5 0 0 1 .5-.5H3a5 5 0 0 0 4.5 4.975z"/>
-                            </svg>&nbsp; Report an Error</button></a>
-                            <hr class="mb-4">
-                            
-                            
-                            
+                            {{$data['message']}}     
                         @if(isset($data['response']['product_title']))
                             
     <div class="container">
@@ -220,7 +214,7 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                     </ul>
                 </td>
                 <td>
-                    <a href="{{ $data['response']['product_link'] }}" class="cg-button" target="_blank" rel="nofollow">Check On Daraz</a>
+                    <!-- <a href="{{ $data['response']['product_link'] }}" class="cg-button" target="_blank" rel="nofollow">Check On Daraz</a> -->
                 </td>
             </tr>
             </tbody>
@@ -258,7 +252,6 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                                         </tbody>
                                     </table>
                                 </div>
-                                <p>::: Variants :::</p>
                                 <div class="row">
                                     <!--Ads Start Here-->
                                     Sposners Ads 

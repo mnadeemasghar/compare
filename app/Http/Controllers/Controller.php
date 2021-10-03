@@ -12,31 +12,18 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function getdata($url){
-        $link = 'test.html';
 
-        $html =  htmlentities(file_get_contents($url));
+        $html =  file_get_contents($url);
         $apprun_position = strpos($html,'app.run');
-        $apprun_position = $apprun_position + 8;
-        $endofapprun_position = strpos(
-            substr($html,$apprun_position), "]}}}"
-        );
-        $string = substr($html, $apprun_position, $endofapprun_position+4);
-        //convert into html decoded
-        $apprun_string = html_entity_decode($string);
+        $apprun_string = substr($html,$apprun_position + 8);
+        $apprun_ending = strpos($apprun_string,"catch");
+
+        $apprun_string = substr($apprun_string, 0, $apprun_ending-14);
         
+
         //convert into string to array
         $data_array = json_decode($apprun_string, TRUE);
-        
-        //$apprun_string = preg_replace('@<(\w+)\b.*?'>'.*?</\1>@si', '', $apprun_string);
-        $apprun_string = str_replace("<a", " ", $apprun_string);
-        $apprun_string = str_replace('</a>', " ", $apprun_string);
-        $apprun_string = strip_tags($apprun_string);
-        $apprun_string = str_replace(">", " ", $apprun_string);
-        
-        // die($apprun_string);
-        
 
-        // dd($data_array);
         $data['page_body'] = $html;
 
         if($data_array != null){
