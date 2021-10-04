@@ -59,3 +59,5 @@ Route::get('/show-unique-attributes', [App\Http\Controllers\AttributeController:
 Route::get('/attributes', [App\Http\Controllers\AttributeController::class, 'index'])->name('attributes');
 
 Route::get('/admin-dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
+
+Route::post('/store_group', [App\Http\Controllers\GroupController::class, 'store'])->name('store_group');

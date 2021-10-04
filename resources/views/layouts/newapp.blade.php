@@ -51,7 +51,7 @@
                                         <li class="nav-item @if(Route::currentRouteName() == 'aboutus') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('aboutus')}}">About</a>
                                         </li>
-                                        <li class="nav-item @if(Route::currentRouteName() == 'aboutus') {{__('active')}} @endif">
+                                        <li class="nav-item @if(Route::currentRouteName() == 'daraztools') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('daraztools')}}">Daraz Tools</a>
                                         </li>
                                         <li class="nav-item @if(Route::currentRouteName() == 'blog') {{__('active')}} @endif">

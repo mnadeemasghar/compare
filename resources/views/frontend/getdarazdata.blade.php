@@ -214,7 +214,12 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                     </ul>
                 </td>
                 <td>
-                    <!-- <a href="{{ $data['response']['product_link'] }}" class="cg-button" target="_blank" rel="nofollow">Check On Daraz</a> -->
+                    <form action="{{route('store_group')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="group_name" value="My List">
+                        <input type="hidden" name="url" value="{{ $data['response']['product_link'] }}">
+                        <button type="submit" class="cg-button">Add to my List</button>
+                    </form>
                 </td>
             </tr>
             </tbody>
