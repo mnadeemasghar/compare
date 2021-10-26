@@ -48,9 +48,9 @@
                                         <li class="nav-item @if(Route::currentRouteName() == 'welcome') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('welcome')}}">Home <span class="sr-only">(current)</span></a>
                                         </li>
-                                        <li class="nav-item @if(Route::currentRouteName() == 'aboutus') {{__('active')}} @endif">
+                                        <!-- <li class="nav-item @if(Route::currentRouteName() == 'aboutus') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('aboutus')}}">About</a>
-                                        </li>
+                                        </li> -->
                                         <li class="nav-item @if(Route::currentRouteName() == 'daraztools') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('daraztools')}}">Daraz Tools</a>
                                         </li>
@@ -59,6 +59,9 @@
                                         </li>                            
                                         <li class="nav-item @if(Route::currentRouteName() == 'contactus') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('contactus')}}">Contact</a>
+                                        </li>
+                                        <li class="nav-item @if(Route::currentRouteName() == 'login') {{__('active')}} @endif">
+                                            <a class="nav-link tm-nav-link" href="{{route('login')}}">Login</a>
                                         </li>
                                     </ul>                            
                                 </div>                        

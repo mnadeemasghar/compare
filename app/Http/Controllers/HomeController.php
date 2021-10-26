@@ -37,7 +37,7 @@ class HomeController extends Controller
                                     ->orderby('darazlink.created_at','desc')
                                     ->get();
 
-            return view('home')->with('groups',$groups);
+            return view('user.home')->with('groups',$groups);
         }
         
     }

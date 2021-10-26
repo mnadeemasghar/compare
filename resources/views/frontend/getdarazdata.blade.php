@@ -214,7 +214,7 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                     </ul>
                 </td>
                 <td>
-                    <form action="{{route('store_group')}}" method="POST">
+                    <form action="{{route('store_group')}}" method="POST" target="_blank">
                         @csrf
                         <input type="hidden" name="group_name" value="My List">
                         <input type="hidden" name="url" value="{{ $data['response']['product_link'] }}">
