@@ -78,12 +78,12 @@
                             <li class="tm-bg-control" data-id="2"></li>
                         </ul>            
                     </div>        
-                    <div class="tm-col-right tm-col-footer">
+                    {{-- <div class="tm-col-right tm-col-footer">
                         <footer class="tm-site-footer text-right">
                             <p>{{ App\Http\Controllers\FrontendController::getcate() }}</p>
                             <p class="mb-0">Copyright 2021 Comparepk | Design & Develop: <a rel="nofollow" target="_parent" href="https://www.linkedin.com/in/m-nadeem-asghar-82268478/" class="tm-text-link">M Nadeem Asghar</a></p>
                         </footer>
-                    </div>  
+                    </div>   --}}
                 </div>
                 <!-- Diagonal background design -->
                 <div class="tm-bg">

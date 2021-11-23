@@ -25,6 +25,9 @@ Route::get('/blog', [App\Http\Controllers\FrontendController::class, 'blog'])->n
 Route::post('/submitContactUs', [App\Http\Controllers\FrontendController::class, 'submitContactUs'])->name('submitContactUs');
 Route::get('/fetch', [App\Http\Controllers\FrontendController::class, 'fetch'])->name('fetch')->middleware('admin');
 
+Route::get('/all-tools', [App\Http\Controllers\FrontendController::class, 'alltools'])->name('alltools');
+Route::get('/get-location-by-ip', [App\Http\Controllers\FrontendController::class, 'getlocationbyip'])->name('getlocationbyip');
+
 Route::get('/daraz-tools', [App\Http\Controllers\FrontendController::class, 'daraztools'])->name('daraztools');
 Route::get('/daraz-tools/get-daraz-product-data', [App\Http\Controllers\FrontendController::class, 'getdarazdata'])->name('getdarazdata');
 Route::get('/daraz-tools/get-daraz-product-data_for_fetch', [App\Http\Controllers\FrontendController::class, 'getdarazdata_for_fetch'])->name('getdarazdata_for_fetch');
@@ -46,7 +49,9 @@ Route::get('/create_post',[App\Http\Controllers\PostsController::class, 'create'
 Route::post('/store_post',[App\Http\Controllers\PostsController::class, 'store'])->name('storepost');
 Route::get('/destroy_post',[App\Http\Controllers\PostsController::class, 'destroy'])->name('destroypost');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get("my_lists", [App\Http\Controllers\ListController::class, 'index'])->name('user.list.index');
+
+Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/create-item', [App\Http\Controllers\ItemController::class, 'create'])->name('create-item');
 Route::get('/show-item/{id}', [App\Http\Controllers\ItemController::class, 'show'])->name('show-item');
 Route::get('/store-item', [App\Http\Controllers\ItemController::class, 'store'])->name('store-item');
@@ -61,3 +66,4 @@ Route::get('/attributes', [App\Http\Controllers\AttributeController::class, 'ind
 Route::get('/admin-dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
 
 Route::post('/store_group', [App\Http\Controllers\GroupController::class, 'store'])->name('store_group');
+Route::post('/destroy_group', [App\Http\Controllers\GroupController::class, 'destroy'])->name('destroy_group');

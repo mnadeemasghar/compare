@@ -17,6 +17,40 @@ use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
 {
+    public function getlocationbyip(){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://referential.p.rapidapi.com/v1/city?ip=103.151.42.2",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: referential.p.rapidapi.com",
+                "x-rapidapi-key: 147324341bmsh581ce2d9208ea41p1f9f2bjsn08fe8ba9932b"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }
+    }
+
+    public function alltools(){
+        return view('frontend.all_tools');
+    }
+
     public function fetch(){
         $today = DB::table('darazlink')->distinct()->whereDate('created_at', "=",Carbon::today())->pluck('product_link')->toArray();
         // // $data = DB::table('darazlink')
@@ -50,7 +84,6 @@ class FrontendController extends Controller
             
             if($host == "www.daraz.pk" || $host == "daraz.pk"){
                 $response = $this->getdata($request->url);
-
                 if(isset($response['product_link'])){
                     $product_link = $response['product_link'];
                     $old_data = DarazLink::where('product_link',$product_link)->whereDate('created_at', Carbon::today())->get();
@@ -66,6 +99,14 @@ class FrontendController extends Controller
                         if(isset($response['product_sale_price'])){$new->product_sale_price = $response['product_sale_price'];}
                         if(isset($response['product_stock'])){$new->product_stock = $response['product_stock'];}
                     
+                        if(isset($response['main_category'])){$new->main_category = $response['main_category'];}
+                        if(isset($response['sub_category'])){$new->sub_category = $response['sub_category'];}
+                        if(isset($response['sub_sub_category'])){$new->sub_sub_category = $response['sub_sub_category'];}
+                        if(isset($response['categoryid'])){$new->categoryid = $response['categoryid'];}
+                        if(isset($response['qas_no'])){$new->qas_no = $response['qas_no'];}
+
+                        if(isset($response['response'])){$new->response = $response['response'];}
+                        
                         if($new->save()){
                             if(isset($response['product_title'])){
                                 
@@ -165,6 +206,14 @@ class FrontendController extends Controller
                         if(isset($response['seller_shop_id'])){$new->seller_shop_id = $response['seller_shop_id'];}
                         if(isset($response['product_sale_price'])){$new->product_sale_price = $response['product_sale_price'];}
                         if(isset($response['product_stock'])){$new->product_stock = $response['product_stock'];}
+                        
+                        if(isset($response['main_category'])){$new->main_category = $response['main_category'];}
+                        if(isset($response['sub_category'])){$new->sub_category = $response['sub_category'];}
+                        if(isset($response['sub_sub_category'])){$new->sub_sub_category = $response['sub_sub_category'];}
+                        if(isset($response['categoryid'])){$new->categoryid = $response['categoryid'];}
+                        if(isset($response['qas_no'])){$new->qas_no = $response['qas_no'];}
+
+                        if(isset($response['response'])){$new->response = $response['response'];}
                     
                         if($new->save()){
                             if(isset($response['product_title'])){
@@ -306,7 +355,8 @@ class FrontendController extends Controller
         return view('frontend.aboutus');
     }
     public function welcome(){
-        return view('welcome');
+        // return view('welcome');
+        return redirect()->route('daraztools');
     }
     
     public function search(Request $request){

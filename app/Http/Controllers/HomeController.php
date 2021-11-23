@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DarazLink;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class HomeController extends Controller
@@ -31,13 +33,23 @@ class HomeController extends Controller
         }else{
             $user_id = Auth::user()->id;
 
-            $groups['data'] = Group::where('user_id',$user_id)->get();
-            $groups['history'] = Group::where('user_id',$user_id)
-                                    ->join('darazlink','darazlink.product_link','groups.url')
-                                    ->orderby('darazlink.created_at','desc')
-                                    ->get();
+            $groups = Group::where('user_id',$user_id)->get();
+            foreach($groups as $group){
+                $group->category = DarazLink::where('product_link',$group->url)->value('main_category');
+            }
 
-            return view('user.home')->with('groups',$groups);
+            $categories = DarazLink::pluck('main_category')->toarray();
+            foreach($categories as $category){
+                $product_links[$category] = DarazLink::where('main_category',$category)->pluck('product_link')->toarray();
+                foreach($product_links[$category] as $product_link){
+                    $reviews[$product_link] = DarazLink::where('product_link',$product_link)->get()->max('product_rating_total');
+                }
+            }
+
+            $links = DarazLink::get()->groupBy('product_link');
+
+            // dd($categories, $product_links, $reviews,$links);
+            return view('user.dashboard')->with('groups',$groups);
         }
         
     }
