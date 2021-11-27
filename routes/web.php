@@ -23,14 +23,14 @@ Route::get('/about-us', [App\Http\Controllers\FrontendController::class, 'aboutu
 Route::get('/services', [App\Http\Controllers\FrontendController::class, 'sitemap'])->name('sitemap');
 Route::get('/blog', [App\Http\Controllers\FrontendController::class, 'blog'])->name('blog');
 Route::post('/submitContactUs', [App\Http\Controllers\FrontendController::class, 'submitContactUs'])->name('submitContactUs');
-Route::get('/fetch', [App\Http\Controllers\FrontendController::class, 'fetch'])->name('fetch')->middleware('admin');
+// Route::get('/fetch', [App\Http\Controllers\FrontendController::class, 'fetch'])->name('fetch')->middleware('admin');
 
 Route::get('/all-tools', [App\Http\Controllers\FrontendController::class, 'alltools'])->name('alltools');
 Route::get('/get-location-by-ip', [App\Http\Controllers\FrontendController::class, 'getlocationbyip'])->name('getlocationbyip');
 
 Route::get('/daraz-tools', [App\Http\Controllers\FrontendController::class, 'daraztools'])->name('daraztools');
 Route::get('/daraz-tools/get-daraz-product-data', [App\Http\Controllers\FrontendController::class, 'getdarazdata'])->name('getdarazdata');
-Route::get('/daraz-tools/get-daraz-product-data_for_fetch', [App\Http\Controllers\FrontendController::class, 'getdarazdata_for_fetch'])->name('getdarazdata_for_fetch');
+// Route::get('/daraz-tools/get-daraz-product-data_for_fetch', [App\Http\Controllers\FrontendController::class, 'getdarazdata_for_fetch'])->name('getdarazdata_for_fetch');
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'welcome'])->name('welcome');
 Route::get('/search/{search}', [App\Http\Controllers\FrontendController::class, 'search'])->name('search');

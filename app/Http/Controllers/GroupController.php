@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DarazLink;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,20 +49,23 @@ class GroupController extends Controller
         //
         $user_id = Auth::user()->id;
         $url = $request->url;
+        $darazlink_id = DarazLink::where('url',$url)->first()->value('id');
 
-        $url_check = Group::where('url',$url)->where('user_id',$user_id)->get();
+        $url_check = Group::where('daraz_link_id',$darazlink_id)->where('user_id',$user_id)->get();
         if(isset($url_check) && $url_check->count() > 0 ){
             return redirect()->back()->with('message',"URL already listed");
         }
-        $group_name = $request->group_name;
+        else{
+            $group_name = $request->group_name;
 
-        $new = new Group;
-        $new->user_id = $user_id;
-        $new->group_name = $group_name;
-        $new->url = $url;
-
-        if($new->save()){
-            return redirect()->back();
+            $new = new Group;
+            $new->user_id = $user_id;
+            $new->group_name = $group_name;
+            $new->daraz_link_id = $darazlink_id;
+    
+            if($new->save()){
+                return redirect()->back();
+            }
         }
     }
 
@@ -109,7 +113,7 @@ class GroupController extends Controller
     {
         //
         $user_id = Auth::user()->id;
-        if(Group::where('url',$request->url)->where('user_id',$user_id)->delete()){
+        if(Group::where('id',$request->id)->where('user_id',$user_id)->delete()){
             return redirect()->back()->with('message',"Link Deleted Successfully!");
         }
         else{

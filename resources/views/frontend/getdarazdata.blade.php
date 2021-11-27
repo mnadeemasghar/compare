@@ -170,8 +170,8 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                             <b>This is Beta Version:</b> Some of the links may not work, so be patient and keep following us on <a href="https://www.facebook.com/comparepk/" target="_blank">facebook page</a>. We are actively Updating. Thanks
                         </div>
                         @if(isset($data))
-                            {{$data['message']}}     
-                        @if(isset($data['response']['product_title']))
+                            {{$data['message']}}
+                        @if(isset($data['response']->product_title))
                             
     <div class="container">
         <table class="cg-table-one cg-black">
@@ -186,10 +186,10 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
             <tbody>
             <tr>
                 <td>
-                <span class="lable"><small>{{ $data['response']['brand'] }}</small></span>
+                <span class="lable"><small>{{ $data['response']->brand }}</small></span>
                 </td>
                 <td>
-                <span class="lable"><small>{{ $data['response']['brand'] }}</small></span>
+                <span class="lable"><small>{{ $data['response']->brand }}</small></span>
                     <img src="{{ $data['response']['product_skus'][0]['image'] }}">
                 </td>
                 <td>
@@ -263,18 +263,6 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                                     <script async="async" data-cfasync="false" src="//carpenterexplorerdemolition.com/664ecacda93a041580ac31d8afa308bb/invoke.js"></script>
                                     <div id="container-664ecacda93a041580ac31d8afa308bb"></div>
                                     <!--Ads End Here-->
-                                    @foreach($data['response']['product_skus'] as $skus)
-                                    <div class="col-md-3 mb-2 >
-                                        <div class="card" style="display:none;">
-                                            <img class="card-img-top" src="{{ $skus['image'] }}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Stock: {{ $skus['stock'] }}</h5>
-                                                <h5 class="card-title">Price: {{ $skus['price']['salePrice']['value'] }}</h5>
-                                                <h5 class="card-title">SKU ID: {{ $skus['skuId'] }}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
                                 </div>
                             @endif
                         @endif

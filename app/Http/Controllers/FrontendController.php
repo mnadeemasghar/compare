@@ -191,52 +191,6 @@ class FrontendController extends Controller
             
             if($host == "www.daraz.pk" || $host == "daraz.pk"){
                 $response = $this->getdata($request->url);
-
-                if(isset($response['product_link'])){
-                    $product_link = $response['product_link'];
-                    $old_data = DarazLink::where('product_link',$product_link)->whereDate('created_at', Carbon::today())->get();
-                    if($old_data->count() < 1){
-                        $new = new DarazLink();
-                        $new->url = $url;
-                        if(isset($response['product_title'])){$new->product_title = $response['product_title'];}
-                        if(isset($response['product_link'])){$new->product_link = $response['product_link'];}
-                        if(isset($response['product_rating'])){$new->product_rating_score = $response['product_rating'];}
-                        if(isset($response['product_total_rating'])){$new->product_rating_total = $response['product_total_rating'];}
-                        if(isset($response['seller_name'])){$new->seller_name = $response['seller_name'];}
-                        if(isset($response['seller_shop_id'])){$new->seller_shop_id = $response['seller_shop_id'];}
-                        if(isset($response['product_sale_price'])){$new->product_sale_price = $response['product_sale_price'];}
-                        if(isset($response['product_stock'])){$new->product_stock = $response['product_stock'];}
-                        
-                        if(isset($response['main_category'])){$new->main_category = $response['main_category'];}
-                        if(isset($response['sub_category'])){$new->sub_category = $response['sub_category'];}
-                        if(isset($response['sub_sub_category'])){$new->sub_sub_category = $response['sub_sub_category'];}
-                        if(isset($response['categoryid'])){$new->categoryid = $response['categoryid'];}
-                        if(isset($response['qas_no'])){$new->qas_no = $response['qas_no'];}
-
-                        if(isset($response['response'])){$new->response = $response['response'];}
-                    
-                        if($new->save()){
-                            if(isset($response['product_title'])){
-                                
-                                //save sku data in darazskus table
-                                foreach($response['product_skus'] as $key => $skus){
-                                    $sku = new Darazskus();
-                                    $sku->darazlink_id = $new->id;
-                                    $sku->sku_id = $key;
-                                    $sku->sku_stock = $skus['stock'];
-                                    $sku->price = $skus['price']['salePrice']['value'];
-                                    
-                                    $sku->save();
-                                    
-                                }
-                            }
-                            else{
-                                $data['message'] = 'Something went Wrong';
-                            }
-                            
-                        }
-                    }
-                }
                 $data['message'] = 'Data Fetched.';
                 $data['response'] = $response;
             }
@@ -285,8 +239,6 @@ class FrontendController extends Controller
             $history['sale'] = 0;
             $history['earning'] = 0;
         }
-
-        // dd($history);
 
 
         return view('frontend.getdarazdata')

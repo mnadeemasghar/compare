@@ -10,4 +10,8 @@ class DarazLink extends Model
     use HasFactory;
 
     protected $table = 'darazlink';
+
+    public function Group(){
+        $this->hasMany(Group::class);
+    }
 }

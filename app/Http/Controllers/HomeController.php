@@ -33,22 +33,8 @@ class HomeController extends Controller
         }else{
             $user_id = Auth::user()->id;
 
-            $groups = Group::where('user_id',$user_id)->get();
-            foreach($groups as $group){
-                $group->category = DarazLink::where('product_link',$group->url)->value('main_category');
-            }
+            $groups = Group::with('darazlink')->where('user_id',$user_id)->get();
 
-            $categories = DarazLink::pluck('main_category')->toarray();
-            foreach($categories as $category){
-                $product_links[$category] = DarazLink::where('main_category',$category)->pluck('product_link')->toarray();
-                foreach($product_links[$category] as $product_link){
-                    $reviews[$product_link] = DarazLink::where('product_link',$product_link)->get()->max('product_rating_total');
-                }
-            }
-
-            $links = DarazLink::get()->groupBy('product_link');
-
-            // dd($categories, $product_links, $reviews,$links);
             return view('user.dashboard')->with('groups',$groups);
         }
         

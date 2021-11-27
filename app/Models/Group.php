@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     use HasFactory;
+
+    public function DarazLink(){
+        return $this->belongsTo(DarazLink::class);
+    }
 }
