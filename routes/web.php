@@ -52,6 +52,8 @@ Route::get('/destroy_post',[App\Http\Controllers\PostsController::class, 'destro
 Route::get("my_lists", [App\Http\Controllers\ListController::class, 'index'])->name('user.list.index');
 
 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('link-detail', [App\Http\Controllers\HomeController::class, 'link'])->name('link');
+
 Route::get('/create-item', [App\Http\Controllers\ItemController::class, 'create'])->name('create-item');
 Route::get('/show-item/{id}', [App\Http\Controllers\ItemController::class, 'show'])->name('show-item');
 Route::get('/store-item', [App\Http\Controllers\ItemController::class, 'store'])->name('store-item');

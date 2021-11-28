@@ -60,9 +60,15 @@
                                         <li class="nav-item @if(Route::currentRouteName() == 'contactus') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('contactus')}}">Contact</a>
                                         </li>
+                                        @auth
+                                        <li class="nav-item @if(Route::currentRouteName() == 'home') {{__('active')}} @endif">
+                                            <a class="nav-link tm-nav-link" href="{{route('home')}}">Dashboard</a>
+                                        </li>
+                                        @else
                                         <li class="nav-item @if(Route::currentRouteName() == 'login') {{__('active')}} @endif">
                                             <a class="nav-link tm-nav-link" href="{{route('login')}}">Login</a>
                                         </li>
+                                        @endauth
                                     </ul>                            
                                 </div>                        
                             </nav>

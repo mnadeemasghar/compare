@@ -7,7 +7,6 @@ use App\Models\Group;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class HomeController extends Controller
 {
@@ -37,6 +36,15 @@ class HomeController extends Controller
 
             return view('user.dashboard')->with('groups',$groups);
         }
-        
+    }
+
+    public function link(Request $request){
+        if(Auth::user()->role == 'Admin'){
+            return redirect()->route('admin.dashboard');
+        }
+        else{
+            $darazlink = DarazLink::where('url',$request->link)->get();
+            return view('user.link_detail')->with('details',$darazlink);
+        }
     }
 }

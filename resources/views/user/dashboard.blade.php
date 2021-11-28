@@ -36,7 +36,7 @@
                     <tbody>
                         @foreach ($groups as $link)
                             <tr>
-                                <td>{{ $link->darazlink()->first()->url }}</td>
+                                <td><a href="{{route('link',['link'=>$link->darazlink()->first()->url])}}" >{{ $link->darazlink()->first()->url }}</a></td>
                                 <td>{{ $link->darazlink()->first()->main_category }}</td>
                                 <td>
                                     <form action="{{route('destroy_group')}}" method="POST">
@@ -58,6 +58,5 @@
     </div>
     <!-- /.col -->
 </div>
-<!-- /.row -->
 <!-- /.content -->
 @endsection
