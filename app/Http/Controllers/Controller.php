@@ -7,6 +7,7 @@ use App\Models\Darazskus;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Carbon;
 
@@ -96,6 +97,105 @@ class Controller extends BaseController
             }
             // dd($data['sub_sub_category']);
             return $new;
+        }
+    }
+
+    public function getdata_api(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response']);
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+    
+    public function getdata_seller(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->seller;
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+    
+    public function getdata_review(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->review;
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+
+    public function five_day_forcast(Request $request){
+
+        $validated = $request->validate([
+            'lat' => 'required',
+            'lon' => 'required',
+        ]);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://weatherbit-v1-mashape.p.rapidapi.com/forecast/3hourly?lat=".$request->lat."&lon=".$request->lon,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: weatherbit-v1-mashape.p.rapidapi.com",
+                "x-rapidapi-key: 147324341bmsh581ce2d9208ea41p1f9f2bjsn08fe8ba9932b"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            return "cURL Error #:" . $err;
+        } else {
+            return $response;
         }
     }
 }
