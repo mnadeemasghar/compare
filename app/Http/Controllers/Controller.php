@@ -30,27 +30,95 @@ class Controller extends BaseController
             $data_array = json_decode($apprun_string, TRUE);
             $data['response'] = $apprun_string;
             if($data_array != null){
-                $data['product_title'] = $data_array['data']['root']['fields']['product']['title'];
-                $data['product_link'] = $data_array['data']['root']['fields']['product']['link'];
-                $data['brand'] = $data_array['data']['root']['fields']['product']['brand']['name'];
-                $data['product_rating'] = $data_array['data']['root']['fields']['product']['rating']['score']; 
-                $data['product_total_rating'] = $data_array['data']['root']['fields']['product']['rating']['total']; 
+                if(isset($data_array['data']['root']['fields']['product']['title'])){
+                    $data['product_title'] = $data_array['data']['root']['fields']['product']['title'];
+                }
+                else{
+                    $data['product_title'] = "NA";
+                }
+
+                if(isset($data_array['data']['root']['fields']['product']['link'])){
+                    $data['product_link'] = $data_array['data']['root']['fields']['product']['link'];
+                }else{
+                    $data['product_link'] = "NA";
+                }
                 
-                $data['seller_name'] = $data_array['data']['root']['fields']['seller']['name']; 
-                $data['seller_shop_id'] = $data_array['data']['root']['fields']['seller']['shopId']; 
-                $data['product_sale_price'] = $data_array['data']['root']['fields']['skuInfos']['0']['price']['salePrice']['value']; 
-                $data['product_stock'] = $data_array['data']['root']['fields']['skuInfos']['0']['stock']; 
+                if(isset($data_array['data']['root']['fields']['product']['brand']['name'])){
+                    $data['brand'] = $data_array['data']['root']['fields']['product']['brand']['name'];
+                }else{
+                    $data['brand'] = "NA";
+                }
                 
-                $data['main_category'] = $data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']['0']; 
-                $data['sub_category'] = $data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']['1']; 
-                $data['sub_sub_category'] = end($data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']); 
-                $data['categoryid'] = $data_array['data']['root']['fields']['skuInfos']['0']['categoryId'];
+                if(isset($data_array['data']['root']['fields']['product']['rating']['score'])){
+                    $data['product_rating'] = $data_array['data']['root']['fields']['product']['rating']['score'];
+                }else{
+                    $data['product_rating'] = "NA";
+                }
+                
+                if(isset($data_array['data']['root']['fields']['product']['rating']['total'])){
+                    $data['product_total_rating'] = $data_array['data']['root']['fields']['product']['rating']['total']; 
+                }else{
+                    $data['product_total_rating'] = "NA";
+                }
+
+                if(isset($data_array['data']['root']['fields']['seller']['name'])){
+                    $data['seller_name'] = $data_array['data']['root']['fields']['seller']['name']; 
+                }else{
+                    $data['seller_name'] = "NA";
+                }
+
+                if(isset($data_array['data']['root']['fields']['seller']['shopId'])){
+                    $data['seller_shop_id'] = $data_array['data']['root']['fields']['seller']['shopId']; 
+                }else{
+                    $data['seller_shop_id'] = "NA";
+                }
+
+                if(isset($data_array['data']['root']['fields']['skuInfos']['0']['price']['salePrice']['value'])){
+                    $data['product_sale_price'] = $data_array['data']['root']['fields']['skuInfos']['0']['price']['salePrice']['value']; 
+                }else{
+                    $data['product_sale_price'] = "NA";
+                }
+
+                if(isset($data_array['data']['root']['fields']['skuInfos']['0']['stock'])){
+                    $data['product_stock'] = $data_array['data']['root']['fields']['skuInfos']['0']['stock']; 
+                }else{
+                    $data['product_stock'] = "NA";
+                }
+                
+                if(isset($data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']['0'])){
+                    $data['main_category'] = $data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']['0']; 
+                }else{
+                    $data['main_category'] = 'NA';
+                }
+
+                if(isset($data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']['1'])){
+                    $data['sub_category'] = $data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']['1']; 
+                }else{
+                    $data['sub_category'] = "NA";
+                }
+
+                if(isset($data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category'])){
+                    $data['sub_sub_category'] = end($data_array['data']['root']['fields']['skuInfos']['0']['dataLayer']['pdt_category']); 
+                }else{
+                    $data['sub_sub_category'] = "NA";
+                }
+
+                if(isset($data_array['data']['root']['fields']['skuInfos']['0']['categoryId'])){
+                    $data['categoryid'] = $data_array['data']['root']['fields']['skuInfos']['0']['categoryId'];
+                }else{
+                    $data['categoryid'] = "NA";
+                }
+
                 if(isset($data_array['data']['root']['fields']['qna']['items'])){
                     $data['qas_no'] = sizeof($data_array['data']['root']['fields']['qna']['items']);
                 }
                 
+                if(isset($data_array['data']['root']['fields']['skuInfos'])){
+                    $data['product_skus'] = $data_array['data']['root']['fields']['skuInfos'];
+                }else{
+                    $data['product_skus'] = "NA";
+                }
                 
-                $data['product_skus'] = $data_array['data']['root']['fields']['skuInfos'];
             }
             if(isset($data['product_link'])){
                 $product_link = $data['product_link'];
@@ -142,6 +210,111 @@ class Controller extends BaseController
         return $data;
     }
     
+    public function getdata_skuInfos(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->skuInfos;
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+    
+    public function getdata_title(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->product->title;
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+    
+    public function getdata_brand(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->product->brand;
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+    
+    public function getdata_product(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->product;
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+    
+    public function getdata_skuGalleries(Request $request){
+
+        $validated = $request->validate([
+            'url' => 'required'
+        ]);
+
+        $parse = parse_url($request->url);
+        $host = $parse['host'];
+        
+        if($host == "www.daraz.pk" || $host == "daraz.pk"){
+            $response = $this->getdata($request->url);
+            $data['message'] = 'Data Fetched.';
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->skuGalleries;
+        }
+        else{
+            $data['message'] = 'This tool is only for Daraz.pk';
+        }
+
+        return $data;
+    }
+    
     public function getdata_review(Request $request){
 
         $validated = $request->validate([
@@ -154,7 +327,7 @@ class Controller extends BaseController
         if($host == "www.daraz.pk" || $host == "daraz.pk"){
             $response = $this->getdata($request->url);
             $data['message'] = 'Data Fetched.';
-            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->review;
+            $data['response'] = json_decode($response->only('response')['response'])->data->root->fields->review->ratings;
         }
         else{
             $data['message'] = 'This tool is only for Daraz.pk';

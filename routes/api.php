@@ -22,3 +22,9 @@ Route::POST('get-daraz-product-data',[\App\Http\Controllers\Controller::class, '
 Route::POST('getdata_seller',[\App\Http\Controllers\Controller::class, 'getdata_seller']);
 Route::POST('getdata_review',[\App\Http\Controllers\Controller::class, 'getdata_review']);
 Route::POST('weather/five-day',[\App\Http\Controllers\Controller::class, 'five_day_forcast']);
+
+Route::POST('getdata_skuInfos',[\App\Http\Controllers\Controller::class, 'getdata_skuInfos']);
+Route::POST('getdata_title',[\App\Http\Controllers\Controller::class, 'getdata_title']);
+Route::POST('getdata_skuGalleries',[\App\Http\Controllers\Controller::class, 'getdata_skuGalleries']);
+Route::POST('getdata_product',[\App\Http\Controllers\Controller::class, 'getdata_product']);
+Route::POST('getdata_brand',[\App\Http\Controllers\Controller::class, 'getdata_brand']);

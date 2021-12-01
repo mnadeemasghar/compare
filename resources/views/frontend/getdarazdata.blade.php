@@ -190,7 +190,7 @@ table[class*='cg-table-'].cg-bluebell{--cg-theme-color:var(--cg-bluebell);}
                 </td>
                 <td>
                 <span class="lable"><small>{{ $data['response']->brand }}</small></span>
-                    <img src="{{ $data['response']['product_skus'][0]['image'] }}">
+                    <img src="{{ json_decode($data['response']['response'],true)['data']['root']['fields']['skuInfos']['0']['image'] }}">
                 </td>
                 <td>
                     <a class="cg-title" href="{{ $data['response']['product_link'] }}" target="_blank" rel="nofollow">{{ $data['response']['product_title'] }}</a>
