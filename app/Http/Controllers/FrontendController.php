@@ -246,6 +246,35 @@ class FrontendController extends Controller
                 ->with('data',$data)
                 ->with('url',$request->url);
     }
+    public function getdarazdataforchromeextension(Request $request){
+        if(isset($request->url)){
+            $url = $request->url;
+            $parse = parse_url($url);
+            $host = $parse['host'];
+            
+            if($host == "www.daraz.pk" || $host == "daraz.pk"){
+                $response = $this->getdata($request->url);
+                $data['message'] = 'Data Fetched.';
+                $data['response'] = $response;
+            }
+            else{
+                $data['message'] = 'This tool is only for Daraz.pk';
+            }
+        }
+        else{
+            $data['message'] = 'Waiting for your link';
+        }
+        if(isset($response['product_link'])){
+            $link = $response['product_link'];
+            $history = DarazLink::where("product_link",$link)->get();
+        }
+
+
+        return view('frontend.getdarazdataforchromeextension')
+                ->with('history',$history)
+                ->with('data',$data)
+                ->with('url',$request->url);
+    }
     public function daraztools(){
         return view('frontend.daraztools');
     }

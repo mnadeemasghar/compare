@@ -30,6 +30,7 @@ Route::get('/get-location-by-ip', [App\Http\Controllers\FrontendController::clas
 
 Route::get('/daraz-tools', [App\Http\Controllers\FrontendController::class, 'daraztools'])->name('daraztools');
 Route::get('/daraz-tools/get-daraz-product-data', [App\Http\Controllers\FrontendController::class, 'getdarazdata'])->name('getdarazdata');
+Route::get('/daraz-tools/get-daraz-product-data-for-chrome-extension', [App\Http\Controllers\FrontendController::class, 'getdarazdataforchromeextension'])->name('getdarazdataforchromeextension');
 // Route::get('/daraz-tools/get-daraz-product-data_for_fetch', [App\Http\Controllers\FrontendController::class, 'getdarazdata_for_fetch'])->name('getdarazdata_for_fetch');
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'welcome'])->name('welcome');

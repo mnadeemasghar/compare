@@ -28,3 +28,4 @@ Route::POST('getdata_title',[\App\Http\Controllers\Controller::class, 'getdata_t
 Route::POST('getdata_skuGalleries',[\App\Http\Controllers\Controller::class, 'getdata_skuGalleries']);
 Route::POST('getdata_product',[\App\Http\Controllers\Controller::class, 'getdata_product']);
 Route::POST('getdata_brand',[\App\Http\Controllers\Controller::class, 'getdata_brand']);
+
