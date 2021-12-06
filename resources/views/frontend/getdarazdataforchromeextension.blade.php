@@ -1,14 +1,21 @@
 @extends('layouts.chrome')
 
 @section('content')
-<h2>{{ $data['response']->product_title }}</h2>
+<div class="row">
+    <div class="col-4">
+        <img class="img-fluid" src="{{ json_decode($data['response']['response'],true)['data']['root']['fields']['skuInfos']['0']['image'] }}">
+    </div>
+    <div class="col-8">
+        <h5>{{ $data['response']->product_title }}</h5>
+        <ul>
+            <li><b>Brand Name: </b><i>{{ $data['response']->seller_name }}</i></li>
+            <li><b>Main Category: </b><i>{{ $data['response']->main_category }}</i></li>
+            <li><b>Sub Category: </b><i>{{ $data['response']->sub_category }}</i></li>
+            <li><b>Sub Sub Category: </b><i>{{ $data['response']->sub_sub_category }}</i></li>
+        </ul>
+    </div>
+</div>
 
-<ul>
-    <li><b>Brand Name: </b><i>{{ $data['response']->seller_name }}</i></li>
-    <li><b>Main Category: </b><i>{{ $data['response']->main_category }}</i></li>
-    <li><b>Sub Category: </b><i>{{ $data['response']->sub_category }}</i></li>
-    <li><b>Sub Sub Category: </b><i>{{ $data['response']->sub_sub_category }}</i></li>
-</ul>
 
 <div class="alert alert-warning">
     {{__("Visit daily to view updated record!")}}
@@ -24,14 +31,18 @@
     </thead>
     
     <tbody>
-        <tr>
-            <td>{{ $data['response']->product_rating_score }}</td>
-            <td>{{ $data['response']->product_rating_total }}</td>
-            <td>{{ $data['response']->updated_at }}</td>
-            <td>{{ $data['response']->product_sale_price }}</td>
-            <td>{{ $data['response']->product_stock }}</td>
-            <td>{{ $data['response']->qas_no }}</td>
-        </tr>
+        @if(isset($history) && $history->count() > 0)
+            @foreach($history as $data)
+                <tr>
+                    <td>{{ $data->product_rating_score }}</td>
+                    <td>{{ $data->product_rating_total }}</td>
+                    <td><small>{{ date('d M y', strtotime($data->updated_at)) }}</small></td>
+                    <td>{{ $data->product_sale_price }}</td>
+                    <td>{{ $data->product_stock }}</td>
+                    <td>{{ $data->qas_no }}</td>
+                </tr>
+            @endforeach
+        @endif
     </tbody>
 </table>
 
